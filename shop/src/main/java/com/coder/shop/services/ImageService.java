@@ -16,6 +16,8 @@ import com.coder.shop.exceptions.FileSaveErrorException;
 public class ImageService {
     private static final String UPLOAD_DIR = "src/main/resources/static/images";
 
+    // private static final String UPLOAD_DIR = "shop/src/main/resources/static/images";
+
     public String saveFile(MultipartFile file) {
         try {
             Path uploadPath = Paths.get(UPLOAD_DIR);
@@ -41,3 +43,8 @@ public class ImageService {
         return images;
     }
 }
+
+
+// <img alt="" width="50" src="http://localhost:3000/images/1766132188863_Java_applied.png">
+
+// <img alt="" width="50" src="http://localhost:3000/images/1766132188863_Java_applied.png">

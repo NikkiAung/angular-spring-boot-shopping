@@ -1,0 +1,94 @@
+<div class="container">
+  <h4 class="text-center">Add new Product</h4>
+  <div class="col-md-6 offset-md-3">
+    <form [formGroup]="AddForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <select class="form-select" aria-label="Category Select" formControlName="catId">
+          <option selected>Select Category</option>
+          <option value="1">One</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <select class="form-select" aria-label="Subcat Select" formControlName="subcatId">
+          <option selected>Select Sub Category</option>
+          <option value="1">One</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <select class="form-select" aria-label="Subcat Select" formControlName="childcatId">
+          <option selected>Select Child Cat</option>
+          <option value="1">One</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <select class="form-select" aria-label="Tag Select" formControlName="tagId">
+          <option selected>Select Tag</option>
+          <option value="1">One</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="name"
+          formControlName="name"
+          placeholder="Product"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="price" class="form-label">Price</label>
+        <input
+          type="number"
+          class="form-control"
+          id="price"
+          formControlName="price"
+          placeholder="$0.0"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="formFile" class="form-label">Image</label>
+        <input
+          class="form-control"
+          type="file"
+          id="formFile"
+          (change)="onFileSelected($event)"
+          accept="image/*"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label">Product Description</label>
+        <textarea
+          class="form-control"
+          id="description"
+          rows="3"
+          formControlName="description"
+        ></textarea>
+      </div>
+
+      <div class="d-flex justify-content-end">
+        <a [routerLink]="['/cats']" class="btn btn-sm btn-outline-warning me-1">Cancel</a>
+        <button
+          type="submit"
+          class="btn btn-sm btn-success"
+          [disabled]="!AddForm.valid || !selectedFiles || isSubmitting"
+        >
+          Add
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

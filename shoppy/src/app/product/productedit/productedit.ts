@@ -1,23 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import Vary from '../../utils/Vary';
 import { CommonModule } from '@angular/common';
-import { Cat, SCat } from '../../models/categories';
-import { Subcatservice } from '../subcatservice';
-import { Apiservice } from '../../apiservice';
+import { Cat } from '../../models/categories';
+import { ProductService } from '../product-service';
 
 @Component({
-  selector: 'app-subcatedit',
+  selector: 'app-productedit',
   imports: [CommonModule, RouterLink, ReactiveFormsModule],
-  templateUrl: './subcatedit.html',
-  styleUrl: './subcatedit.css',
+  templateUrl: './productedit.html',
+  styleUrl: './productedit.css',
 })
-export class Subcatedit {
+export class Productedit {
   EditForm = new FormGroup({
     name: new FormControl(''),
     image: new FormControl(''),
-    catId: new FormControl(0),
   });
 
   selectedFile: File | null = null;
@@ -25,29 +23,26 @@ export class Subcatedit {
   curImage = '';
   editId: number | null = null;
 
-  cats: Cat[] = [];
-
   constructor(
-    private subcatService: Subcatservice,
+    private productService: ProductService,
     private router: Router,
-    private route: ActivatedRoute,
-    private apiService: Apiservice
+    private route: ActivatedRoute
   ) {
     this.editId = Number(this.route.snapshot.paramMap.get('id'));
   }
 
   ngOnInit() {
-    this._loadCategories();
+    // Load existing category data to populate the form
     if (this.editId != null) {
-      this.subcatService.get(this.editId).subscribe({
-        next: (category: SCat) => {
+      this.productService.get(this.editId).subscribe({
+        next: (category: Cat) => {
           // Fill form with existing category data
           this.EditForm.patchValue({
             name: category.name,
             image: category.image, // This is just for form state, not displayed
           });
           // Display current image
-          this.curImage = Vary.getImage(category.image) || '';
+          this.curImage = Vary.getImage(category.images[0]) || '';
           console.log('Category loaded for editing:', category);
         },
         error: (error) => {
@@ -77,10 +72,12 @@ export class Subcatedit {
       if (this.selectedFile) {
         formData.append('file', this.selectedFile);
       }
-
-      this.subcatService.update(this.editId, formData).subscribe({
+      console.log(formData.get('name'));
+      console.log(formData.get('image'));
+      console.log(formData.get('file'));
+      this.productService.update(this.editId, formData).subscribe({
         next: (response) => {
-          this.router.navigate(['/subcats']);
+          this.router.navigate(['/cats']);
         },
         error: (error) => {
           console.error('Error updating category: ', error);
@@ -91,15 +88,5 @@ export class Subcatedit {
         },
       });
     }
-  }
-
-  _loadCategories() {
-    this.apiService.getCategories().subscribe((cts: Cat[]) => {
-      cts.forEach((cat: Cat) => {
-        cat.image = Vary.getImage(cat.image);
-        this.cats.push(cat);
-      });
-    });
-    console.log('loading cats', this.cats);
   }
 }

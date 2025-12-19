@@ -27,7 +27,6 @@ export class Catall implements OnInit {
         ...cat,
         image: Vary.getImage(cat.image),
       }));
-      console.log('Categories loaded:', this.categories);
     });
   }
 

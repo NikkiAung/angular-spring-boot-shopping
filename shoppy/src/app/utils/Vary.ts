@@ -4,6 +4,8 @@ class Vary {
   static readonly CAT_URL = 'http://localhost:3000/admin/cats';
   static readonly SUBCAT_URL = 'http://localhost:3000/admin/subcats';
   static readonly CHILDCAT_URL = 'http://localhost:3000/admin/childcats';
+  static readonly TAG_URL = 'http://localhost:3000/admin/tags';
+  static readonly PRODUCT_URL = 'http://localhost:3000/admin/products';
   static getImage = (name: string) => Vary.BASE_URL + '/images/' + name;
 }
 

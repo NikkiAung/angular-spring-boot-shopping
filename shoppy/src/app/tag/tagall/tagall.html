@@ -1,1 +1,40 @@
-<p>tagall works!</p>
+<div class="d-flex justify-content-between mt-4 mb-3">
+  <h6>All Categories (Total: {{ tags.length }})</h6>
+  <a class="btn btn-sm btn-success" [routerLink]="['/tags/add']">
+    <i class="fa fa-plus"></i>
+  </a>
+</div>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Name</th>
+      <th scope="col">Image</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    @for (tag of tags; track tag.id; let i = $index) {
+    <tr>
+      <td>{{ i + 1 }}</td>
+      <td>{{ tag.name }}</td>
+      <td><img [src]="tag.image" alt="" width="50" /></td>
+      <td>
+        <a [routerLink]="['/tags/edit', tag.id]" class="btn btn-sm btn-warning me-1">
+          <i class="fa fa-edit"></i>
+        </a>
+        <button class="btn btn-sm btn-danger" (click)="deleteTag(tag.id)">
+          <i class="fa fa-trash"></i>
+        </button>
+      </td>
+    </tr>
+    }
+  </tbody>
+</table>
+
+<!-- should appear -->
+<!-- <img alt="" width="50" src="http://localhost:3000/images/1766128479369_Java_applied.png"> -->
+
+<!-- <img alt="" width="50" src="http://localhost:3000/images/1766042761156_Cloud_flare_agent.png"> -->

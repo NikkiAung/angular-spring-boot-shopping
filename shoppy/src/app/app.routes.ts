@@ -12,6 +12,14 @@ import { Subcatall } from './subcat/subcatall/subcatall';
 import { Childcatall } from './childcat/childcatall/childcatall';
 import { Childcatadd } from './childcat/childcatadd/childcatadd';
 import { Childcatedit } from './childcat/childcatedit/childcatedit';
+import { Tag } from './tag/tag';
+import { Tagall } from './tag/tagall/tagall';
+import { Tagadd } from './tag/tagadd/tagadd';
+import { Tagedit } from './tag/tagedit/tagedit';
+import { Product } from './product/product';
+import { Productall } from './product/productall/productall';
+import { Productadd } from './product/productadd/productadd';
+import { Productedit } from './product/productedit/productedit';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -40,6 +48,24 @@ export const routes: Routes = [
       { path: '', component: Childcatall },
       { path: 'add', component: Childcatadd },
       { path: 'edit/:id', component: Childcatedit },
+    ],
+  },
+  {
+    path: 'tags',
+    component: Tag,
+    children: [
+      { path: '', component: Tagall },
+      { path: 'add', component: Tagadd },
+      { path: 'edit/:id', component: Tagedit },
+    ],
+  },
+  {
+    path: 'products',
+    component: Product,
+    children: [
+      { path: '', component: Productall },
+      { path: 'add', component: Productadd },
+      { path: 'edit/:id', component: Productedit },
     ],
   },
 ];

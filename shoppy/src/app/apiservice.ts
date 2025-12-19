@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import Vary from './utils/Vary';
 import { Cat, CCat, SCat } from './models/categories';
+import { TagModel } from './models/tagmodel';
+import { ProductModel } from './models/productmodel';
 
 @Injectable({
   providedIn: 'root',
@@ -20,5 +22,13 @@ export class Apiservice {
 
   getChildCategories() {
     return this.http.get<CCat[]>(this.baseUrl + '/childcats');
+  }
+
+  getTags() {
+    return this.http.get<TagModel[]>(this.baseUrl + '/tags');
+  }
+
+  getProducts() {
+    return this.http.get<ProductModel[]>(this.baseUrl + '/products');
   }
 }

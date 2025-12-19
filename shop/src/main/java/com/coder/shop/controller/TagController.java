@@ -18,7 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -37,36 +38,51 @@ public class TagController {
     @Autowired
     private final ImageService imageService;
 
+    @CrossOrigin(origins = "http://localhost:4000")
     @PostMapping
-    public ResponseEntity<Msg> addCat(@RequestBody TagDto tagDto) {
+    public ResponseEntity<Msg> addCat(TagDto tagDto) {
         Tag tag = new Tag();
         tag.setName(tagDto.getName());
-        tag.setImage(tagDto.saveAndGetFileName());
+        tag.setImage(imageService.saveFile(tagDto.getFile()));
         tagService.add(tag);
         return ResponseEntity.ok(new Msg("Tag Save Success", HttpStatus.OK.value()));
     }
 
+    @CrossOrigin(origins = "http://localhost:4000")
     @GetMapping("{id}")
-    public ResponseEntity<Tag> getSingle(@PathVariable("id") int id) {
+    public ResponseEntity<Tag> getSingle(@PathVariable int id) {
         Tag tag = tagService.get(id);
         return ResponseEntity.ok(tag);
     }
 
-    @PatchMapping("{id}")
-    public ResponseEntity<Msg> patchCat(@PathVariable("id") int id, @RequestBody TagDto tagDto) {
+    @CrossOrigin(origins = "http://localhost:4000")
+    @PutMapping("{id}")
+    public ResponseEntity<Msg> putCat(@PathVariable int id, TagDto tagDto) {
         Tag tag = new Tag();
         tag.setName(tagDto.getName());
-        tag.setImage(tagDto.saveAndGetFileName());
+        tag.setImage(imageService.saveFile(tagDto.getFile()));
         tagService.update(id, tag);
         return ResponseEntity.ok(new Msg("Tag Updated",HttpStatus.OK.value()));
     }    
 
+    @CrossOrigin(origins = "http://localhost:4000")
+    @PatchMapping("{id}")
+    public ResponseEntity<Msg> patchCat(@PathVariable int id, TagDto tagDto) {
+        Tag tag = new Tag();
+        tag.setName(tagDto.getName());
+        tag.setImage(imageService.saveFile(tagDto.getFile()));
+        tagService.update(id, tag);
+        return ResponseEntity.ok(new Msg("Tag Updated",HttpStatus.OK.value()));
+    }    
+
+    @CrossOrigin(origins = "http://localhost:4000")
     @PatchMapping("name/{id}")
-    public ResponseEntity<Msg> patchName(@PathVariable int id, @RequestParam("name") String name) {
+    public ResponseEntity<Msg> patchName(@PathVariable int id, @RequestParam String name) {
         tagService.nameChange(id, name);
         return ResponseEntity.ok(new Msg("Name Change Success", HttpStatus.OK.value()));
     }
 
+    @CrossOrigin(origins = "http://localhost:4000")
     @PatchMapping("images/{id}")
     public ResponseEntity<Msg> patchName(@PathVariable int id, @RequestPart MultipartFile files) {
         String fileName = imageService.saveFile(files);
@@ -74,6 +90,7 @@ public class TagController {
         return ResponseEntity.ok(new Msg("Images Change Success", HttpStatus.OK.value()));
     }
 
+    @CrossOrigin(origins = "http://localhost:4000")
     @DeleteMapping("{id}")
     public ResponseEntity<Msg> dropCat(@PathVariable int id) {
         tagService.drop(id);

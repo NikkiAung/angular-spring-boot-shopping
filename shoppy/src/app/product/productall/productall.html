@@ -1,0 +1,35 @@
+<div class="d-flex justify-content-between mt-4 mb-3">
+  <h6>All Products</h6>
+  <a class="btn btn-sm btn-success" [routerLink]="['/products/add']">
+    <i class="fa fa-plus"></i>
+  </a>
+</div>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Name</th>
+      <th scope="col">Image</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    @for (product of products; track product.id; let i = $index) {
+    <tr>
+      <td>{{ i + 1 }}</td>
+      <td>{{ product.name }}</td>
+      <td><img [src]="product.images[0]" alt="" width="50" /></td>
+      <td>
+        <a [routerLink]="['/products/edit', product.id]" class="btn btn-sm btn-warning me-1">
+          <i class="fa fa-edit"></i>
+        </a>
+        <button class="btn btn-sm btn-danger" (click)="deleteCat(product.id)">
+          <i class="fa fa-trash"></i>
+        </button>
+      </td>
+    </tr>
+    }
+  </tbody>
+</table>

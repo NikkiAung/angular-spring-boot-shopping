@@ -27,7 +27,6 @@ export class Subcatall {
         ...cat,
         image: Vary.getImage(cat.image),
       }));
-      console.log('Categories loaded:', this.categories);
     });
   }
 
