@@ -1,0 +1,35 @@
+<div class="d-flex justify-content-between mt-4 mb-3">
+  <h6>All Sub Categories (Total: {{ categories.length }})</h6>
+  <a class="btn btn-sm btn-success" [routerLink]="['/subcats/add']">
+    <i class="fa fa-plus"></i>
+  </a>
+</div>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Name</th>
+      <th scope="col">Image</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    @for (cat of categories; track cat.id; let i = $index) {
+    <tr>
+      <td>{{ i + 1 }}</td>
+      <td>{{ cat.name }}</td>
+      <td><img [src]="cat.image" alt="" width="50" /></td>
+      <td>
+        <a [routerLink]="['/subcats/edit', cat.id]" class="btn btn-sm btn-warning me-1">
+          <i class="fa fa-edit"></i>
+        </a>
+        <button class="btn btn-sm btn-danger" (click)="deleteCat(cat.id)">
+          <i class="fa fa-trash"></i>
+        </button>
+      </td>
+    </tr>
+    }
+  </tbody>
+</table>

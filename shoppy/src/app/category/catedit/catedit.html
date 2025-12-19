@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="col-md-6 offset-md-3">
+    <form [formGroup]="EditForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="name"
+          formControlName="name"
+          placeholder="Product"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="formFile" class="form-label">Image</label>
+        <input
+          class="form-control"
+          type="file"
+          id="formFile"
+          (change)="onFileSelected($event)"
+          accept="image/*"
+        />
+      </div>
+      @if (curImage) {
+      <div>
+        <img [src]="curImage" alt="" width="500" />
+      </div>
+      }
+      <div class="d-flex justify-content-end">
+        <a [routerLink]="['/cats']" class="btn btn-sm btn-outline-warning me-1">Cancel</a>
+        <button
+          type="submit"
+          class="btn btn-sm btn-success"
+          [disabled]="!EditForm.valid || isSubmitting"
+        >
+          Update
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
