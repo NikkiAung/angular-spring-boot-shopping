@@ -20,6 +20,10 @@ import { Product } from './product/product';
 import { Productall } from './product/productall/productall';
 import { Productadd } from './product/productadd/productadd';
 import { Productedit } from './product/productedit/productedit';
+import { Role } from './role/role';
+import { Roleall } from './role/roleall/roleall';
+import { Roleadd } from './role/roleadd/roleadd';
+import { Roleedit } from './role/roleedit/roleedit';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -66,6 +70,15 @@ export const routes: Routes = [
       { path: '', component: Productall },
       { path: 'add', component: Productadd },
       { path: 'edit/:id', component: Productedit },
+    ],
+  },
+  {
+    path: 'roles',
+    component: Role,
+    children: [
+      { path: '', component: Roleall },
+      { path: 'add', component: Roleadd },
+      { path: 'edit/:id', component: Roleedit },
     ],
   },
 ];
