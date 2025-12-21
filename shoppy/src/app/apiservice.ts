@@ -31,4 +31,12 @@ export class Apiservice {
   getProducts() {
     return this.http.get<ProductModel[]>(this.baseUrl + '/products');
   }
+
+  login(data: Object) {
+    return this.http.post<any>(this.baseUrl + '/login', data);
+  }
+
+  register(data: Object) {
+    return this.http.post<any>(this.baseUrl + '/register', data);
+  }
 }

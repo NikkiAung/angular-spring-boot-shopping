@@ -7,6 +7,7 @@ class Vary {
   static readonly TAG_URL = 'http://localhost:3000/admin/tags';
   static readonly PRODUCT_URL = 'http://localhost:3000/admin/products';
   static readonly ROLE_URL = 'http://localhost:3000/admin/roles';
+  static readonly USERS_URL = 'http://localhost:3000/admin/users';
   static getImage = (name: string) => Vary.BASE_URL + '/images/' + name;
 }
 

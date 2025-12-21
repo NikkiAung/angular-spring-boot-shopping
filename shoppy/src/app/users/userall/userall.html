@@ -1,0 +1,33 @@
+<div class="d-flex justify-content-center mt-4 mb-3">
+  <h6>All Categories</h6>
+</div>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Name</th>
+      <th scope="col">Phone</th>
+      <th scope="col">Role</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    @for (user of users; track user.id; let i = $index) {
+    <tr>
+      <td>{{ i + 1 }}</td>
+      <td>{{ user.name }}</td>
+      <td>{{ user.phone }}</td>
+      <td>
+        <span *ngIf="user.roles.length > 0">{{ user.roles[0].name }}</span>
+      </td>
+      <td>
+        <a [routerLink]="['/users/edit', user.id]" class="btn btn-sm btn-warning me-1">
+          <i class="fa fa-edit"></i>
+        </a>
+      </td>
+    </tr>
+    }
+  </tbody>
+</table>

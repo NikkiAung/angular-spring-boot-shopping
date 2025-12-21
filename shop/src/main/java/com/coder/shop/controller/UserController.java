@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,15 +31,22 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
+    @CrossOrigin(origins = "http://localhost:4000")
+    @GetMapping("{id}")
+    public ResponseEntity<AppUser> get(@PathVariable Long id) {
+        return ResponseEntity.ok(userService.get(id));
+    }
+
+    @CrossOrigin(origins = "http://localhost:4000")
     @PatchMapping("add/role/{userId}/{roleId}")
-    public ResponseEntity<Msg> addRole(Long userId, int roleId) {
+    public ResponseEntity<Msg> addRole(@PathVariable Long userId, @PathVariable int roleId) {
         userService.addRole(userId, roleId);
         return ResponseEntity.ok(new Msg("Role Add Successfully", HttpStatus.OK.value()));
     }
 
-
+    @CrossOrigin(origins = "http://localhost:4000")
     @PatchMapping("remove/role/{userId}/{roleId}")
-    public ResponseEntity<Msg> removeRole(Long userId, int roleId) {
+    public ResponseEntity<Msg> removeRole(@PathVariable Long userId, @PathVariable int roleId) {
         userService.removeRole(userId, roleId);
         return ResponseEntity.ok(new Msg("Role Remove Successfully", HttpStatus.OK.value()));
     }

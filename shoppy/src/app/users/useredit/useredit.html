@@ -1,0 +1,28 @@
+<h6 class="text-center">{{ user?.name }}</h6>
+<div class="col-md-6 offset-md-3">
+  <div class="row">
+    <div class="col-md-5">
+      <h6>Available Roles</h6>
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let role of roles">
+          <span>{{ role.name }}</span>
+          <button class="btn btn-sm btn-warning" (click)="addRole(role.id)">
+            <i class="fa fa-plus"></i>
+          </button>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-2"></div>
+    <div class="col-md-5">
+      <h6>Exist Roles</h6>
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let role of user?.roles">
+          <span>{{ role.name }}</span>
+          <button class="btn btn-sm btn-danger" (click)="removeRole(role.id)">
+            <i class="fa fa-minus"></i>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

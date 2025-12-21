@@ -24,9 +24,15 @@ import { Role } from './role/role';
 import { Roleall } from './role/roleall/roleall';
 import { Roleadd } from './role/roleadd/roleadd';
 import { Roleedit } from './role/roleedit/roleedit';
+import { Userall } from './users/userall/userall';
+import { Useredit } from './users/useredit/useredit';
+import { Login } from './login/login';
+import { Register } from './register/register';
 
 export const routes: Routes = [
   { path: '', component: Home },
+  { path: 'login', component: Login },
+  { path: 'register', component: Register },
   {
     path: 'cats',
     component: Category,
@@ -79,6 +85,15 @@ export const routes: Routes = [
       { path: '', component: Roleall },
       { path: 'add', component: Roleadd },
       { path: 'edit/:id', component: Roleedit },
+    ],
+  },
+  {
+    path: 'users',
+    component: Role,
+    children: [
+      { path: '', component: Userall },
+      // { path: 'add', component: Useredit },
+      { path: 'edit/:id', component: Useredit },
     ],
   },
 ];
