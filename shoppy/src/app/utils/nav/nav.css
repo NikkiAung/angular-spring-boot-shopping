@@ -1,0 +1,12 @@
+.product-count {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  background-color: red;
+  font-size: 0.8em;
+  text-align: center;
+  color: #fff;
+  right: 10px;
+  top: 7px;
+}

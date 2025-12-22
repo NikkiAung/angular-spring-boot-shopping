@@ -26,6 +26,8 @@ export class Login {
 
       this.apiService.login(this.LoginForm.value).subscribe({
         next: (response) => {
+          console.log(response.token);
+          localStorage.setItem('token', response.token);
           this.router.navigate(['/']);
         },
         error: (error) => {

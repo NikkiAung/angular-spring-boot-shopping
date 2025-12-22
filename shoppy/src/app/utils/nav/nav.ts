@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { ChangeService } from '../../change-service';
 
 @Component({
   selector: 'app-nav',
@@ -8,5 +9,12 @@ import { RouterLink } from '@angular/router';
   styleUrl: './nav.css',
 })
 export class Nav {
+  productCount: number = 0;
+  constructor(private changeService: ChangeService) {}
 
+  ngOnInit() {
+    this.changeService.productCounts.subscribe((count) => {
+      this.productCount = count;
+    });
+  }
 }

@@ -1,0 +1,27 @@
+<h4>Your Cart Items</h4>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">No</th>
+      <th scope="col">Name</th>
+      <th scope="col">Images</th>
+      <th scope="col">Price</th>
+      <th scope="col">Count</th>
+      <th scope="col">Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let product of products; index as i">
+      <td>{{ i + 1 }}</td>
+      <td>{{ product.name }}</td>
+      <td><img *ngFor="let image of products.images" src="{{ image }}" alt="" width="50px" /></td>
+      <td>{{ product.price }}</td>
+      <td>
+        <button (click)="reduceQuantity(product)"><i class="fa fa-minus"></i></button>
+        {{ product.count }}
+        <button (click)="increaseQuantity(product)"><i class="fa fa-minus"></i></button>
+      </td>
+      <td>{{ product.count * product.price }}</td>
+    </tr>
+  </tbody>
+</table>

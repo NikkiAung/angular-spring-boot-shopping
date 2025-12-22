@@ -11,6 +11,7 @@ import com.coder.shop.models.Role;
 @Service
 public interface UserService {
     List<AppUser> all();
+    AppUser findByName(String name);
     void register(AppUser user);
     void addRole(Long userId, int roleId);
     void removeRole(Long userId, int roleId);

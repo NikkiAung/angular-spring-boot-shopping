@@ -1,1 +1,16 @@
-<p>home works!</p>
+<div class="row">
+  <div class="col-md3" *ngFor="let product of products">
+    <div class="card p-3" style="width: 18rem">
+      <img src="{{ product.images[0] }}" class="card-img-top" alt="..." height="200px" />
+      <div class="card-body">
+        <h5 class="card-title">{{ product.name }}</h5>
+        <p class="card-text">
+          {{ product.price }}
+        </p>
+        <button href="#" class="btn btn-warning btn-sm" (click)="addToCart(product)">
+          <i class="fa fa-shopping-cart"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
