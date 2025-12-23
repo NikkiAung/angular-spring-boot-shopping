@@ -1,0 +1,55 @@
+<div class="accordion" id="accordionExample">
+  <div class="accordion-item" *ngFor="let order of orderHistories; let i = index">
+    <h2 class="accordion-header">
+      <button
+        class="accordion-button"
+        [class.collapsed]="i !== 0"
+        type="button"
+        data-bs-toggle="collapse"
+        [attr.data-bs-target]="'#collapse' + i"
+        [attr.aria-expanded]="i === 0 ? true : false"
+        aria-controls="collapseOne"
+      >
+        Order {{ order.id }} {{ order.total }}
+      </button>
+    </h2>
+    <div
+      [id]="'collapse' + i"
+      class="accordion-collapse collapse"
+      data-bs-parent="#accordionExample"
+      [class.show]="i === 0"
+    >
+      <div class="accordion-body">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">No</th>
+              <th scope="col">Name</th>
+              <th scope="col">Images</th>
+              <th scope="col">Price</th>
+              <th scope="col">Count</th>
+              <th scope="col">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of order.orderItem; let j = index">
+              <td>{{ j + 1 }}</td>
+              <td>{{ item.name }}</td>
+              <td>
+                <img
+                  *ngFor="let image of item.images"
+                  src="{{ getImage(image) }}"
+                  alt=""
+                  width="50px"
+                />
+              </td>
+              <td>{{ item.price }}</td>
+              <td>{{ item.count }}</td>
+              <td>{{ item.price * item.count }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
