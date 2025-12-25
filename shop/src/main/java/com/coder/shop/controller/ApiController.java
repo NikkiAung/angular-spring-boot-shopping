@@ -7,11 +7,13 @@ import com.coder.shop.dtos.LoginRequest;
 import com.coder.shop.dtos.LoginResponse;
 import com.coder.shop.dtos.Msg;
 import com.coder.shop.dtos.OrderDto;
+import com.coder.shop.dtos.OrderItemDto;
 import com.coder.shop.dtos.RegisterRequest;
 import com.coder.shop.models.AppUser;
 import com.coder.shop.models.Category;
 import com.coder.shop.models.Childcat;
 import com.coder.shop.models.Order;
+import com.coder.shop.models.OrderItem;
 import com.coder.shop.models.Product;
 import com.coder.shop.models.Subcat;
 import com.coder.shop.models.Tag;
@@ -25,8 +27,10 @@ import com.coder.shop.services.SubcatService;
 import com.coder.shop.services.TagService;
 import com.coder.shop.services.UserService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -110,11 +114,35 @@ public class ApiController {
 
     @CrossOrigin(origins = "http://localhost:4000")
     @PostMapping("/orders")
-    public ResponseEntity<Msg> addOrder(@RequestBody OrderDto orderDto) {
+    public ResponseEntity<Msg> addOrder(@RequestBody OrderDto orderDto, HttpServletRequest request) {
+        String username = jwtUtil.getUserFromToken(request);
+        AppUser user = userService.findByName(username);
+
+        if(username == null || user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new Msg("User Not Found", HttpStatus.UNAUTHORIZED.value()));
+        }
+
+        List<OrderItem> orderItems = new ArrayList<>();
+
+        for(OrderItemDto item : orderDto.getItems()) {
+            Product product = productService.get(item.getId());
+            OrderItem orderItem = new OrderItem();
+            orderItem.setCount(item.getCount());
+            orderItem.setName(product.getName());
+            orderItem.setPrice(product.getPrice());
+            orderItem.setImages(product.getImages());
+            orderItem.setProductId(product.getId());
+
+            orderItems.add(orderService.addItem(orderItem));
+        }
+
         Order order = new Order();
         order.setTotal(orderDto.getTotal());
-        order.setOrderItem(orderDto.getOrderItems());
+        order.setOrderItem(orderItems);
+        order.setBuyerId(user.getId());
+        order.setBuyerName(user.getName());
         orderService.add(order);
+    
         return ResponseEntity.ok(new Msg("Order Add Successfully", HttpStatus.OK.value()));
     }
 
@@ -140,7 +168,7 @@ public class ApiController {
 
     @CrossOrigin(origins = "http://localhost:4000")
     @PostMapping("/register")
-    public ResponseEntity<?> login(@RequestBody RegisterRequest registerRequest) {
+    public ResponseEntity<?> register(@RequestBody RegisterRequest registerRequest) {
         try {
             AppUser existingUser = userService.findByName(registerRequest.getName());
             if(existingUser != null) {
@@ -149,8 +177,8 @@ public class ApiController {
 
             AppUser newUser = new AppUser();
             newUser.setName(registerRequest.getName());
-            newUser.setName(registerRequest.getPhone());
-            newUser.setName(passwordEncoder.encode(registerRequest.getPassword()));
+            newUser.setPhone(registerRequest.getPhone());
+            newUser.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
 
             userService.register(newUser);
 
@@ -158,5 +186,20 @@ public class ApiController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Msg("Registration Fail " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value()));
         }
+    }
+
+
+    @CrossOrigin(origins = "http://localhost:4000")
+    @PostMapping("/myOrders")
+    public ResponseEntity<?> addOrder(HttpServletRequest request) {
+        String username = jwtUtil.getUserFromToken(request);
+        AppUser user = userService.findByName(username);
+
+        if(username == null || user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new Msg("User Not Found", HttpStatus.UNAUTHORIZED.value()));
+        }
+
+        List<Order> myOrders = orderService.getMyOrders(user.getId());
+        return ResponseEntity.ok(myOrders);
     }
 }
