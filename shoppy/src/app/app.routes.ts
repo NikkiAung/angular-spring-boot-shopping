@@ -29,12 +29,14 @@ import { Useredit } from './users/useredit/useredit';
 import { Login } from './login/login';
 import { Register } from './register/register';
 import { Cartpage } from './cartpage/cartpage';
+import { Orderhistory } from './orderhistory/orderhistory';
 
 export const routes: Routes = [
   { path: '', component: Home },
   { path: 'login', component: Login },
   { path: 'register', component: Register },
   { path: 'cart', component: Cartpage },
+  { path: 'history', component: Orderhistory },
   {
     path: 'cats',
     component: Category,
