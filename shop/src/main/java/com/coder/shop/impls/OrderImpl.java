@@ -43,4 +43,9 @@ public class OrderImpl implements OrderService {
     public OrderItem addItem(OrderItem item) {
         return orderItemRepo.save(item);
     }
+
+    @Override
+    public List<Order> getMyOrders(Long buyerId) {
+        return orderRepo.findByBuyerId(buyerId);
+    }
 }
